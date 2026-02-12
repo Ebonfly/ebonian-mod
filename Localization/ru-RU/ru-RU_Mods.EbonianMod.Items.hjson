@@ -930,3 +930,8 @@ GoatItem: {
 	// DisplayName: Goat Item
 	// Tooltip: ""
 }
+
+ItemName: {
+	// DisplayName: Item Name
+	// Tooltip: ""
+}

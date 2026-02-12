@@ -392,3 +392,6 @@ StarcallerShotVFX.DisplayName: Strzał Przywoływacza Gwiazd
 // LaserDrone.DisplayName: Laser Drone
 // LaserDroneLaer.DisplayName: Laser Drone Laer
 // LaserDroneLaser.DisplayName: Laser Drone Laser
+// ItemNameFlower.DisplayName: Item Name Flower
+// ItemNameProjectile.DisplayName: Item Name Projectile
+// ItemNameFlowerDamaging.DisplayName: Item Name Flower Damaging
