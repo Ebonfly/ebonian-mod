@@ -102,9 +102,9 @@ public class CrimsonSpearP : HeldSword
             }
             Projectile.ai[1] = 1;
             if (Projectile.localAI[1] < 1 && Projectile.ai[2] < 40)
-                Projectile.localAI[1] += 0.25f * Projectile.localAI[1].Safe();
+                Projectile.localAI[1] += 0.25f * Projectile.localAI[1].SafeDivision();
             else if (Projectile.localAI[1] > 0 && Projectile.ai[2] > 80)
-                Projectile.localAI[1] -= 0.25f * Projectile.localAI[1].Safe();
+                Projectile.localAI[1] -= 0.25f * Projectile.localAI[1].SafeDivision();
             Projectile.rotation += MathHelper.ToRadians(20 * Projectile.localAI[1]);
             if (Projectile.ai[2] < 100)
                 if (player.active && player.channel && !player.dead && !player.CCed && !player.noItems)

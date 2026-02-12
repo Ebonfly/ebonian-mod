@@ -81,7 +81,7 @@ public class XBolt : ModProjectile
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Texture2D glow = Helper.GetTexture(Texture + "_Glow").Value;
         Main.spriteBatch.Reload(BlendState.Additive);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = (1f - fadeMult * i);
@@ -173,7 +173,7 @@ public class XBoltFriendly : ModProjectile
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Texture2D glow = Helper.GetTexture(Texture + "_Glow").Value;
         Main.spriteBatch.Reload(BlendState.Additive);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = (1f - fadeMult * i);
@@ -295,7 +295,7 @@ public class XBoltFriendly2 : ModProjectile
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Texture2D glow = Helper.GetTexture(Texture + "_Glow").Value;
         Main.spriteBatch.Reload(BlendState.Additive);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = (1f - fadeMult * i);

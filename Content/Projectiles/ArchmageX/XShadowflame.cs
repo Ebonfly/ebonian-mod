@@ -93,7 +93,7 @@ public class XShadowflame : ModProjectile
         float alpha = riftAlpha;
         float i = 1;
         Main.spriteBatch.Reload(Effects.SpriteRotation.Value);
-        Effects.SpriteRotation.Value.Parameters["scale"].SetValue(new Vector2(scale.X * 0.75f, scale.Y / alpha.Safe() * 0.5f));
+        Effects.SpriteRotation.Value.Parameters["scale"].SetValue(new Vector2(scale.X * 0.75f, scale.Y / alpha.SafeDivision() * 0.5f));
         Effects.SpriteRotation.Value.Parameters["rotation"].SetValue(-Main.GameUpdateCount * 0.035f * alpha);
         Effects.SpriteRotation.Value.Parameters["uColor"].SetValue(new Color(60, 2, 113).ToVector4() * alpha * alpha * 0.8f);
         Effects.SpriteRotation.Value.Parameters["hasPerspective"].SetValue(false);

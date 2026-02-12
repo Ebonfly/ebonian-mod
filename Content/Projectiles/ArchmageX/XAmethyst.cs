@@ -32,7 +32,7 @@ public class XAmethyst : ModProjectile
         int i = 0;
         foreach (Vector2 pos in Projectile.oldPos)
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             float mult = (1f - fadeMult * i);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 0, Color.Indigo, Main.rand.NextFloat(0.05f, 0.175f) * mult);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<SparkleDust>(), Vector2.Zero, 0, Color.Indigo, Main.rand.NextFloat(0.05f, 0.15f) * mult);
@@ -54,7 +54,7 @@ public class XAmethyst : ModProjectile
     {
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Texture2D glow = Helper.GetTexture(Texture + "_Glow").Value;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
@@ -125,7 +125,7 @@ public class XAmethystCloseIn : ModProjectile
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Texture2D glow = Helper.GetTexture(Texture + "_Glow").Value;
         float alpha = Clamp(Projectile.ai[2], 0, 1);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         float s = 0;

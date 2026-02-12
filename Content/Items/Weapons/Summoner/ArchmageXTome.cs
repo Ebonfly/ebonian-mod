@@ -196,7 +196,7 @@ public class XTomeP : ModProjectile
         if (vfxOffset >= 1)
             vfxOffset = 0;
         vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {

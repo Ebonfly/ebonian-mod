@@ -248,7 +248,7 @@ public class BloodHunter : ModNPC
             if (NPC.ai[0] >= 80 && NPC.Distance(player.Center) < 100)
                 for (int i = 1; i < oldStingerPos.Length; i++)
                 {
-                    var fadeMult = Helper.Safe(1f / oldStingerPos.Length);
+                    var fadeMult = Helper.SafeDivision(1f / oldStingerPos.Length);
                     float mult = (1f - fadeMult * i);
                     for (float j = 0; j < 5; j++)
                     {

@@ -1,22 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using System;
 using EbonianMod.Content.Dusts;
-using Terraria.GameContent;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Bestiary;
-using Terraria.Utilities;
-using Ionic.Zip;
 using EbonianMod.Common.Globals;
 
 namespace EbonianMod.Content.NPCs.Overworld.Belladonna;
 public class Belladonna : ModNPC
 {
-    public override string Texture => Helper.AssetPath + "NPCs/Overworld/Belladonna/"+Name;
+    public override string Texture => Helper.AssetPath + "NPCs/Overworld/Belladonna/" + Name;
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[Type] = 17;

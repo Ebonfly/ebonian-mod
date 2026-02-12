@@ -1,7 +1,4 @@
-﻿
-
-using System.IO;
-using Terraria.Chat;
+﻿using System.IO;
 
 namespace EbonianMod.Content.Projectiles.Bases;
 
@@ -9,30 +6,26 @@ public abstract class HeldProjectile : ModProjectile
 {
     protected int ItemType;
     protected float AttackDelayMultiplier, AttackSpeedMultiplier;
-
+    protected Vector2 Difference, HoldOffset;
     public override void SetDefaults()
     {
         Projectile.friendly = true;
         Projectile.tileCollide = false;
         Projectile.ignoreWater = true;
     }
-    Vector2 Direction;
     public override void SendExtraAI(BinaryWriter writer)
     {
         writer.Write(AttackDelayMultiplier);
         writer.Write(AttackSpeedMultiplier);
-        writer.WriteVector2(Direction);
     }
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         AttackDelayMultiplier = reader.ReadSingle();
         AttackSpeedMultiplier = reader.ReadSingle();
-        Direction = reader.ReadVector2();
     }
     protected void CalculateAttackSpeedParameters(float baseValue)
     {
-        Player player = Main.player[Projectile.owner];
-        float itemTime = player.itemTime;
+        float itemTime = Main.player[Projectile.owner].itemTime;
         AttackDelayMultiplier = itemTime / baseValue;
         AttackSpeedMultiplier = baseValue / itemTime;
         Projectile.netUpdate = true;
@@ -43,15 +36,18 @@ public abstract class HeldProjectile : ModProjectile
 
         player.itemTime = 2;
         player.itemAnimation = 2;
-        if (Projectile.timeLeft == 0) Projectile.timeLeft = 100;
-
+        Projectile.timeLeft = 10;
         if (!player.active || player.dead || player.CCed || player.HeldItem.type != ItemType) Projectile.Kill();
 
         if (player.whoAmI == Main.myPlayer)
         {
-            Direction = Main.MouseWorld - player.Center;
+            Difference = Main.MouseWorld - player.Center;
+            player.ChangeDir(Difference.X > 0 ? 1 : -1);
+            Projectile.direction = player.direction;
+            LocalBehaviour();
         }
-        player.ChangeDir(Direction.X > 0 ? 1 : -1);
-        Projectile.Center = player.MountedCenter;
+
+        Projectile.Center = player.MountedCenter + new Vector2(HoldOffset.X, HoldOffset.Y * player.direction).RotatedBy(Projectile.rotation);
     }
+    protected virtual void LocalBehaviour() { }
 }

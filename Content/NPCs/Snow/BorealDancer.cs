@@ -44,9 +44,8 @@ public class BorealDancer : ModNPC
         NPC.TargetClosest(true);
         Player player = Main.player[NPC.target];
 
-        Vector2 VectorDistance = player.Center - NPC.Center;
-
-        if (!Helper.Raycast(NPC.Center - Vector2.UnitY * 6, VectorDistance, VectorDistance.Length(), false).Success)
+        Vector2 difference = player.Center - NPC.Center;
+        if (!Helper.Raycast(NPC.Center - Vector2.UnitY * 6, difference, difference.Length(), false).Success)
             NPC.ai[2] = 180;
         NPC.ai[2]--;
 
@@ -73,7 +72,7 @@ public class BorealDancer : ModNPC
                 NPC.velocity.X = Clamp(NPC.velocity.X, -7, 7);
                 if (MathF.Abs(player.Center.X - NPC.Center.X) < 62 && MathF.Abs(player.Center.Y - NPC.Center.Y) < 30)
                 {
-                    MPUtils.NewProjectile(NPC.GetSource_FromThis(), Helper.Raycast(NPC.Center - new Vector2(-NPC.direction * 15, 35), Vector2.UnitY, 500, true).Point + new Vector2(0, 3), Vector2.Zero, ProjectileType<BorealSpike>(), NPC.damage, 0, ai0: 2, ai1: NPC.direction);
+                    MPUtils.NewProjectile(NPC.GetSource_FromThis(), Helper.GetNearestSurface(new Vector2(NPC.Center.X + NPC.direction * 15, NPC.Center.Y)) + new Vector2(0, 4), Vector2.Zero, ProjectileType<BorealSpike>(), NPC.damage, 0, ai0: 2, ai1: NPC.direction);
 
                     SoundEngine.PlaySound(SoundID.Item1.WithPitchOffset(Main.rand.NextFloat(0f, 1f)), NPC.Center);
                     NPC.ai[0] = -1;

@@ -28,7 +28,7 @@ internal class BloodLaser : ModProjectile
     {
         SpriteBatch spriteBatch = Main.spriteBatch;
         Texture2D tex = Assets.Extras.EbonianGatlingBullet.Value;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         spriteBatch.Reload(BlendState.Additive);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {

@@ -14,7 +14,7 @@ public class GarbageGiantFlame : ModProjectile
     public override bool PreKill(int timeLeft)
     {
         int b = 0;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         if (Projectile.owner == Main.myPlayer)
             Projectile.NewProjectile(null, Projectile.Center, Vector2.Zero, ProjectileType<FlameExplosionWSprite>(), 0, 0);
         foreach (Vector2 pos in Projectile.oldPos)
@@ -43,7 +43,7 @@ public class GarbageGiantFlame : ModProjectile
     {
         EbonianMod.garbageFlameCache.Add(() =>
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             for (int i = 1; i < Projectile.oldPos.Length; i++)
             {
                 if (Projectile.oldPos[i] == Vector2.Zero) continue;

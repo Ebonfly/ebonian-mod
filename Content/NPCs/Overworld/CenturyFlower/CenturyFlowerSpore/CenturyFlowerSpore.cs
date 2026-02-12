@@ -27,7 +27,7 @@ namespace EbonianMod.Content.NPCs.Overworld.CenturyFlower.CenturyFlowerSpore
             int frame = Projectile.frame;
             for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
             {
-                float mult = 1 - Helper.Safe(1f / Projectile.oldPos.Length) * i;
+                float mult = 1 - Helper.SafeDivision(1f / Projectile.oldPos.Length) * i;
                 for (float j = 0; j < 3; j++)
                 {
                     Vector2 pos = Vector2.Lerp(Projectile.oldPos[i], Projectile.oldPos[i + 1], j / 3f);

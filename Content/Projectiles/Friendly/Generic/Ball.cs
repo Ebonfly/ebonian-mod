@@ -16,11 +16,6 @@ public class Ball : ModProjectile
         Projectile.timeLeft = 400;
         Projectile.usesLocalNPCImmunity = true;
     }
-    public override void SetStaticDefaults()
-    {
-        ProjectileID.Sets.TrailCacheLength[Type] = 15;
-        ProjectileID.Sets.TrailingMode[Type] = 2;
-    }
 
     public override void OnSpawn(IEntitySource source)
     {
@@ -52,21 +47,15 @@ public class Ball : ModProjectile
                 Projectile.velocity.X = oldVelocity.X * -0.6f;
             }
         }
-        else
-        {
-            Projectile.velocity *= 0.94f;
-        }
-        if (Projectile.timeLeft > 20)
-        {
-            Projectile.timeLeft -= 8;
-        }
+        else Projectile.velocity *= 0.94f;
+        if (Projectile.timeLeft > 20) Projectile.timeLeft -= 8;
+
         return false;
     }
     public override void OnHitNPC(NPC target, NPC.HitInfo hitinfo, int damage)
     {
         Projectile.velocity *= 0.945f;
     }
-    public override bool ShouldUpdatePosition() => true;
     public override void AI()
     {
         Projectile.damage = (int)MathF.Pow(Projectile.velocity.Length(), 2) / 9;
@@ -81,20 +70,17 @@ public class Ball : ModProjectile
             Projectile.CritChance = 0;
         }
 
-        if (Projectile.ai[1] > 0)
-            Projectile.ai[1]--;
+        if (Projectile.ai[1] > 0) Projectile.ai[1]--;
 
         if (Projectile.timeLeft > 365)
         {
             Projectile.velocity.X = Main.player[Projectile.owner].velocity.X;
             Projectile.Center = new Vector2(Main.player[Projectile.owner].MountedCenter.X, Projectile.Center.Y);
         }
-        float HorizontalVelocityModule = MathF.Abs(Projectile.velocity.X);
-        if (HorizontalVelocityModule > 0.02f)
-            Projectile.ai[2] = HorizontalVelocityModule / Projectile.velocity.X;
+        float horizontalVelocityAbs = MathF.Abs(Projectile.velocity.X);
+        if (horizontalVelocityAbs > 0.02f) Projectile.ai[2] = horizontalVelocityAbs / Projectile.velocity.X;
         Projectile.rotation += ToRadians(Projectile.velocity.Length() * 3 * Projectile.ai[2]);
-        if (Projectile.ai[0] > -0.5f)
-            Projectile.ai[0] -= 0.01f;
+        if (Projectile.ai[0] > -0.5f) Projectile.ai[0] -= 0.01f;
         Projectile.velocity.Y -= Projectile.ai[0];
 
         if (Projectile.timeLeft < 20)

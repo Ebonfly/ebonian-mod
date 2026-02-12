@@ -32,7 +32,7 @@ public class XTelegraphLine : ModProjectile
             List<VertexPositionColorTexture> vertices = new();
             List<VertexPositionColorTexture> vertices2 = new();
             List<VertexPositionColorTexture> vertices3 = new();
-            var fadeMult = Helper.Safe(1f / Projectile.ai[0]);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.ai[0]);
             float s = 0;
             for (float i = 0; i < Projectile.ai[0]; i++)
             {

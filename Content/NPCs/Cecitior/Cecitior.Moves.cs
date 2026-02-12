@@ -107,7 +107,7 @@ public partial class Cecitior : ModNPC
         if (AITimer == 40)
         {
             SoundEngine.PlaySound(Sounds.cecitiorSpit, NPC.Center);
-            tongue = MPUtils.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Clamp(Helper.FromAToB(NPC.Center, player.Center), new Vector2(-0.35f, 1), new Vector2(0.35f, 1)) * 1.5f, ProjectileType<LatcherPCecitior>(), 15, 0, -1, NPC.whoAmI);
+            tongue = MPUtils.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Clamp(Helper.FromAToB(NPC.Center, player.Center), new Vector2(-0.35f, 1), new Vector2(0.35f, 1)) * 1.5f, ProjectileType<LatcherProjectileCecitior>(), 15, 0, -1, NPC.whoAmI);
         }
         if (AITimer < 20)
             NPC.velocity = Helper.FromAToB(NPC.Center, player.Center - new Vector2(0, 200), false) / 10f;

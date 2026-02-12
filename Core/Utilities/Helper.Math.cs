@@ -13,7 +13,7 @@ public static partial class Helper
 	/// <summary>
 	/// Avoids division by zero 
 	/// </summary>
-	public static float Safe(this float f, float x = 1)
+	public static float SafeDivision(this float f, float x = 1)
 	{
 		return f + (f == 0 ? x : 0);
 	}

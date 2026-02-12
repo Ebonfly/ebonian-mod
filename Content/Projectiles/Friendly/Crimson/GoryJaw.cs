@@ -4,7 +4,7 @@ namespace EbonianMod.Content.Projectiles.Friendly.Crimson;
 
 public class GoryJaw : ModProjectile
 {
-    public override string Texture => Helper.AssetPath + "Projectiles/Friendly/Crimson/" + Name;
+    public override string Texture => Helper.AssetPath + "Projectiles/Friendly/Crimson/GoryJaw";
     Vector2 PositionOffset;
     Vector2 Scale = Vector2.One;
     int TargetIndex = -1;
@@ -49,12 +49,12 @@ public class GoryJaw : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (Projectile.ai[2] == 0)
+        if (Projectile.ai[1] == 0)
         {
             PositionOffset = Projectile.Center - target.Center;
             TargetIndex = target.whoAmI;
-            Projectile.ai[2] = 1;
-            Projectile.netUpdate = true; // TEST
+            Projectile.ai[1] = 1;
+            Projectile.netUpdate = true;
         }
     }
     public override void AI()
@@ -67,8 +67,8 @@ public class GoryJaw : ModProjectile
             NPC Target = Main.npc[TargetIndex];
             if (Target.life <= 0 || !Target.active)
             {
-                Projectile.ai[2] = 0;
-                Projectile.velocity = Vector2.Lerp(Projectile.velocity, new Vector2(Projectile.velocity.X*0.1f, 1), 0.005f);
+                Projectile.ai[1] = 0;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, new Vector2(Projectile.velocity.X / 10, 1), 0.005f);
                 Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.tileCollide = true;
                 Projectile.netUpdate = true;
@@ -92,9 +92,7 @@ public class GoryJaw : ModProjectile
         else
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (Projectile.ai[1] > -0.5f)
-                Projectile.ai[1] -= 0.00001f;
-            Projectile.velocity.Y -= Projectile.ai[1];
+            Projectile.velocity.Y += 0.002f;
 
             if ((int)Projectile.ai[0] % 15 == 0 || Projectile.ai[0] <= 0.5f)
                 Projectile.netUpdate = true;

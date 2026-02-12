@@ -47,7 +47,7 @@ public class CecitiorTeeth : ModProjectile
     public override Color? GetAlpha(Color lightColor) => Color.White;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = (1f - fadeMult * i);
@@ -123,7 +123,7 @@ public class CecitiorTeethFriendly : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Projectile.timeLeft >= 499) return false;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = (1f - fadeMult * i);

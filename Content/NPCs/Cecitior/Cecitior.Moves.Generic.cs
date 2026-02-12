@@ -205,7 +205,7 @@ public partial class Cecitior : ModNPC
         }
         NPC.Center = savedPos;
         if (AITimer < 100 && AITimer > 0)
-            NPC.Center += Main.rand.NextVector2Unit() * Main.rand.NextFloat(1, (20 - AITimer * 0.2f).Safe());
+            NPC.Center += Main.rand.NextVector2Unit() * Main.rand.NextFloat(1, (20 - AITimer * 0.2f).SafeDivision());
         if (AITimer > 170)
         {
             AIState = PreDeath;

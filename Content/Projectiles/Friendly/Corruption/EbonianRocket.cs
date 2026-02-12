@@ -25,7 +25,7 @@ public class EbonianRocket : ModProjectile
     {
         if (Projectile.ai[0] > 40)
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             vfxOffset -= 0.015f;
             if (vfxOffset <= 0)
                 vfxOffset = 1;

@@ -10,9 +10,6 @@ public abstract class HeldProjectileGun : HeldProjectile
     {
         base.AI();
         Player player = Main.player[Projectile.owner];
-
-        if (player.whoAmI == Main.myPlayer)
-            Projectile.rotation = Utils.AngleLerp(Projectile.rotation, (Main.MouseWorld + CursorOffset.RotatedBy(Projectile.rotation) * player.direction - Projectile.Center).ToRotation(), RotationSpeed) + AnimationRotation * AttackDelayMultiplier;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation - PiOver2);
 
         AnimationRotation = Lerp(AnimationRotation, 0, AnimationRotationSpeed);
@@ -27,5 +24,10 @@ public abstract class HeldProjectileGun : HeldProjectile
     {
         base.ReceiveExtraAI(reader);
         Projectile.rotation = reader.ReadSingle();
+    }
+
+    protected override void LocalBehaviour()
+    {
+        Projectile.rotation = Utils.AngleLerp(Projectile.rotation, (Difference + CursorOffset.RotatedBy(Projectile.rotation) * Main.player[Projectile.owner].direction).ToRotation(), RotationSpeed) + AnimationRotation * AttackDelayMultiplier;
     }
 }

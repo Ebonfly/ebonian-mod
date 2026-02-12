@@ -50,7 +50,7 @@ public class HotGarbageNuke : ModProjectile
             vfxOffset = 1;
         vfxOffset = Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
 
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 1; i < Projectile.oldPos.Length; i++)
         {
             float _mult = (1f - fadeMult * i);
@@ -87,11 +87,11 @@ public class HotGarbageNuke : ModProjectile
         float chevron_alpha = Utils.GetLerpValue(0, 1, waveTimer2);
         float chevron_alpha2 = Clamp((float)Math.Sin(chevron_alpha * Math.PI) * 1, 0, 1f);
         if (Projectile.ai[0] > 60)
-            waveTimer += 0.02f * (waveTimer.Safe() + (alpha2.Safe()));
+            waveTimer += 0.02f * (waveTimer.SafeDivision() + (alpha2.SafeDivision()));
         if (waveTimer > 2)
             waveTimer = 0;
 
-        waveTimer2 += 0.019f * (waveTimer2.Safe());
+        waveTimer2 += 0.019f * (waveTimer2.SafeDivision());
         if (waveTimer2 > 1)
             waveTimer2 = 0;
 

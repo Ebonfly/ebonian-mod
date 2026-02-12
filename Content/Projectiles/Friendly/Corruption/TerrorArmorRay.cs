@@ -24,7 +24,7 @@ public class TerrorArmorRay : ModProjectile
     {
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;

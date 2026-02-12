@@ -149,7 +149,7 @@ public class EHeartP : ModProjectile
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         float alpha = 1f;
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)

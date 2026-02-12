@@ -34,7 +34,7 @@ public class CGhostCeci : ModProjectile
         }
         else
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             Texture2D tex = TextureAssets.Gore[Find<ModGore>("EbonianMod/Cecitior2").Type].Value;
             if (Projectile.frame == 1)
                 tex = TextureAssets.Gore[Find<ModGore>("EbonianMod/Terrortoma5").Type].Value;

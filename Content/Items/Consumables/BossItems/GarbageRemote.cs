@@ -170,7 +170,7 @@ public class GarbageRemoteP : ModProjectile
             {
                 if (i == n - 1)
                     x = 0;
-                Vector2 point = Vector2.SmoothStep(start, end, i / (float)n) + dir * Main.rand.NextFloat(-x, x).Safe(); //x being maximum magnitude
+                Vector2 point = Vector2.SmoothStep(start, end, i / (float)n) + dir * Main.rand.NextFloat(-x, x).SafeDivision(); //x being maximum magnitude
                 points.Add(point);
                 x -= i / (float)n;
             }
@@ -207,7 +207,7 @@ public class GarbageRemoteP : ModProjectile
                     {
                         if (i == n - 1)
                             x = 0;
-                        float a = Main.rand.NextFloat(-x, x).Safe();
+                        float a = Main.rand.NextFloat(-x, x).SafeDivision();
                         if (i < 3)
                             a = 0;
                         Vector2 point = Vector2.SmoothStep(start, end, i / (float)n) + dir * a; //x being maximum magnitude

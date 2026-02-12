@@ -32,7 +32,6 @@ public class Corebreaker : ModItem
 }
 public class CorebreakerProjectile : HeldProjectileGun
 {
-    float HoldOffset;
     public override string Texture => Helper.AssetPath + "Items/Weapons/Ranged/Corebreaker";
     public override bool? CanDamage() => false;
     public override void SetDefaults()
@@ -40,13 +39,11 @@ public class CorebreakerProjectile : HeldProjectileGun
         base.SetDefaults();
         ItemType = ItemType<Corebreaker>();
         RotationSpeed = 0.25f;
-        Projectile.width = 62;
-        Projectile.height = 38;
+        Projectile.Size = new Vector2(62, 38);
+        HoldOffset = new Vector2(0, -2);
     }
-    Texture2D texture;
     public override void OnSpawn(IEntitySource source)
     {
-        texture = Helper.GetTexture(Texture).Value;
         Projectile.netUpdate = true;
         CalculateAttackSpeedParameters(120);
         Projectile.rotation = (Main.MouseWorld - Main.player[Projectile.owner].Center).ToRotation();
@@ -58,11 +55,12 @@ public class CorebreakerProjectile : HeldProjectileGun
         base.AI();
 
         Player player = Main.player[Projectile.owner];
-        HoldOffset = Lerp(HoldOffset, 24, 0.13f);
+        HoldOffset.X = Lerp(HoldOffset.X, 24, 0.13f);
         Projectile.ai[1]++;
         if (Projectile.ai[0]++ >= 120 * AttackDelayMultiplier)
         {
-            Vector2 shotPoint = Projectile.Center + Projectile.rotation.ToRotationVector2() * 45;
+            HoldOffset.X = 0;
+            Vector2 shotPoint = Projectile.Center + Projectile.rotation.ToRotationVector2() * 25;
             SoundEngine.PlaySound(SoundID.Item40.WithPitchOffset(Main.rand.NextFloat(-1f, -0.5f)), player.Center);
             SoundEngine.PlaySound(SoundID.Item38.WithPitchOffset(Main.rand.NextFloat(-0.8f, -0.4f)), player.Center);
             for (int i = 0; i < 30; i++)
@@ -70,14 +68,13 @@ public class CorebreakerProjectile : HeldProjectileGun
             if (player.whoAmI == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), shotPoint, (Main.MouseWorld - Projectile.Center) / 35, ProjectileType<CoreProjectile>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             AnimationRotation = -0.4f * player.direction;
-            HoldOffset = 0;
             Projectile.ai[0] = 0;
             Projectile.netUpdate = true;
         }
         if (Main.mouseRight && Projectile.ai[1] >= 80 * AttackDelayMultiplier && Main.myPlayer == Projectile.owner)
         {
-            HoldOffset = 0;
-            Vector2 shotPoint = Projectile.Center + Projectile.rotation.ToRotationVector2() * 45;
+            HoldOffset.X = 0;
+            Vector2 shotPoint = Projectile.Center + Projectile.rotation.ToRotationVector2() * 25;
             SoundEngine.PlaySound(SoundID.Item62.WithPitchOffset(Main.rand.NextFloat(0.5f, 1.2f)), player.Center);
             SoundEngine.PlaySound(SoundID.Item98.WithPitchOffset(Main.rand.NextFloat(-1f, -0.5f)), player.Center);
             for (int i = 0; i < 30; i++)
@@ -91,14 +88,6 @@ public class CorebreakerProjectile : HeldProjectileGun
             Projectile.ai[1] = 0;
             Projectile.netUpdate = true;
         }
-        if (!Main.player[Projectile.owner].channel)
-            Projectile.Kill();
-    }
-
-    public override bool PreDraw(ref Color lightColor)
-    {
-        Player player = Main.player[Projectile.owner];
-        Main.EntitySpriteDraw(Helper.GetTexture(Texture).Value, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, new Vector2(Projectile.width / 2 - HoldOffset, Projectile.height / 2 + 4 * player.direction), Projectile.scale, player.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically);
-        return false;
+        if (!Main.player[Projectile.owner].channel) Projectile.Kill();
     }
 }

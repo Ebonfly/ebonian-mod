@@ -15,45 +15,42 @@ public class Gibs : ModProjectile
             for (int i = 0; i < 2; i++)
                 Dust.NewDustPerfect(pos + Projectile.Size / 2, Projectile.ai[2] == 0 ? DustID.Blood : DustID.Torch, Main.rand.NextVector2Circular(3, 3));*/
     }
-    public override string Texture => Helper.AssetPath+"Extras/explosion";
+    public override string Texture => Helper.AssetPath + "Extras/explosion";
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMultiplier = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
-        vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
+        vfxOffset = Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
-        float s = 0;
+        float colorMultiplier = 0;
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
-            float mult = (1f - fadeMult * i);
+            float multiplier = (1f - fadeMultiplier * i);
 
-            if (mult < 0.5f)
-                s = MathHelper.Clamp(mult * 3.5f, 0, 0.5f) * 3;
+            if (multiplier < 0.5f)
+                colorMultiplier = Clamp(multiplier * 3.5f, 0, 0.5f) * 3;
             else
-                s = MathHelper.Clamp((-mult + 1) * 2, 0, 0.5f) * 5;
+                colorMultiplier = Clamp((-multiplier + 1) * 2, 0, 0.5f) * 5;
 
             if (i > 0 && Projectile.oldPos[i] != Vector2.Zero)
             {
-                Color col = (Projectile.ai[2] == 0 ? Color.Maroon : Color.OrangeRed) * mult * 2 * s;
+                Color color = (Projectile.ai[2] == 0 ? Color.Maroon : Color.OrangeRed) * multiplier * 2 * colorMultiplier;
 
-                float __off = vfxOffset;
-                if (__off > 1) __off = -__off + 1;
-                float _off = __off + mult;
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * mult, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() + MathHelper.PiOver2), col, new Vector2(_off, 0)));
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * mult, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() - MathHelper.PiOver2), col, new Vector2(_off, 1)));
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * multiplier, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() + MathHelper.PiOver2), color, new Vector2(vfxOffset, 0)));
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * multiplier, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() - MathHelper.PiOver2), color, new Vector2(vfxOffset, 1)));
             }
         }
-        SpritebatchParameters sbParams = Main.spriteBatch.Snapshot();
+        SpritebatchParameters parameters = Main.spriteBatch.Snapshot();
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, (Projectile.ai[2] == 0 ? BlendState.AlphaBlend : BlendState.Additive), SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         if (vertices.Count > 2)
         {
             Helper.DrawTexturedPrimitives(vertices.ToArray(), PrimitiveType.TriangleStrip, Assets.Extras.laser3_transparent.Value, false);
         }
-        Main.spriteBatch.ApplySaved(sbParams);
+        Main.spriteBatch.ApplySaved(parameters);
         return false;
     }
     public override void SetDefaults()
@@ -110,48 +107,45 @@ public class HostileGibs : ModProjectile
             for (int i = 0; i < 2; i++)
                 Dust.NewDustPerfect(pos + Projectile.Size / 2, Projectile.ai[2] == 0 ? DustID.Blood : DustID.Torch, Main.rand.NextVector2Circular(3, 3));*/
     }
-    public override string Texture => Helper.AssetPath+"Extras/explosion";
+    public override string Texture => Helper.AssetPath + "Extras/explosion";
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
-        vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
+        vfxOffset = Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
-        float s = 0;
+        float colorMultiplier = 0;
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
-            float mult = (1f - fadeMult * i);
+            float multiplier = (1f - fadeMult * i);
 
-            if (mult < 0.5f)
-                s = MathHelper.Clamp(mult * 3.5f, 0, 0.5f) * 3;
+            if (multiplier < 0.5f)
+                colorMultiplier = Clamp(multiplier * 3.5f, 0, 0.5f) * 3;
             else
-                s = MathHelper.Clamp((-mult + 1) * 2, 0, 0.5f) * 5;
+                colorMultiplier = Clamp((-multiplier + 1) * 2, 0, 0.5f) * 5;
 
             if (i > 2 && Projectile.oldPos[i] != Vector2.Zero)
             {
-                Color col = (Projectile.ai[2] == 0 ? Color.Maroon : Color.OrangeRed) * mult * 2 * s;
+                Color col = (Projectile.ai[2] == 0 ? Color.Maroon : Color.OrangeRed) * multiplier * 2 * colorMultiplier;
 
-                float __off = vfxOffset;
-                if (__off > 1) __off = -__off + 1;
-                float _off = __off + mult;
-                float rot = Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation();
+                float angle = Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation();
                 if (Projectile.oldPos[i - 1].Equals(Projectile.oldPos[i]) || Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).LengthSquared() == 0)
-                    rot = Projectile.velocity.ToRotation();
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(100 * mult, 0).RotatedBy(rot + MathHelper.PiOver2), col, new Vector2(_off, 0)));
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(100 * mult, 0).RotatedBy(rot - MathHelper.PiOver2), col, new Vector2(_off, 1)));
+                    angle = Projectile.velocity.ToRotation();
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(100 * multiplier, 0).RotatedBy(angle + PiOver2), col, new Vector2(vfxOffset, 0)));
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(100 * multiplier, 0).RotatedBy(angle - PiOver2), col, new Vector2(vfxOffset, 1)));
             }
         }
-        SpritebatchParameters sbParams = Main.spriteBatch.Snapshot();
+        SpritebatchParameters parameters = Main.spriteBatch.Snapshot();
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, (Projectile.ai[2] == 0 ? BlendState.AlphaBlend : BlendState.Additive), SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         if (vertices.Count > 2)
         {
             Helper.DrawTexturedPrimitives(vertices.ToArray(), PrimitiveType.TriangleStrip, Assets.Extras.laser3_transparent.Value, false);
         }
-        Main.spriteBatch.ApplySaved(sbParams);
+        Main.spriteBatch.ApplySaved(parameters);
         return false;
     }
     public override void SetDefaults()
@@ -208,45 +202,42 @@ public class AmbientGibs : ModProjectile
             for (int i = 0; i < 2; i++)
                 Dust.NewDustPerfect(pos + Projectile.Size / 2, DustID.Blood, Main.rand.NextVector2Circular(3, 3));
     }
-    public override string Texture => Helper.AssetPath+"Extras/explosion";
+    public override string Texture => Helper.AssetPath + "Extras/explosion";
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMultiplier = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
-        vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
+        vfxOffset = Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
-        float s = 0;
+        float colorMultiplier = 0;
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
-            float mult = (1f - fadeMult * i);
+            float multiplier = (1f - fadeMultiplier * i);
 
-            if (mult < 0.5f)
-                s = MathHelper.Clamp(mult * 3.5f, 0, 0.5f);
+            if (multiplier < 0.5f)
+                colorMultiplier = Clamp(multiplier * 3.5f, 0, 0.5f);
             else
-                s = MathHelper.Clamp((-mult + 1) * 2, 0, 0.5f) * 3;
+                colorMultiplier = Clamp((-multiplier + 1) * 2, 0, 0.5f) * 3;
 
             if (i > 0 && Projectile.oldPos[i] != Vector2.Zero)
             {
-                Color col = Color.Maroon * mult * s;
+                Color color = Color.Maroon * multiplier * colorMultiplier;
 
-                float __off = vfxOffset;
-                if (__off > 1) __off = -__off + 1;
-                float _off = __off + mult;
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * mult, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() + MathHelper.PiOver2), col, new Vector2(_off, 0)));
-                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * mult, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() - MathHelper.PiOver2), col, new Vector2(_off, 1)));
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * multiplier, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() + MathHelper.PiOver2), color, new Vector2(vfxOffset, 0)));
+                vertices.Add(Helper.AsVertex(Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition + new Vector2(50 * multiplier, 0).RotatedBy(Helper.FromAToB(Projectile.oldPos[i - 1], Projectile.oldPos[i]).ToRotation() - MathHelper.PiOver2), color, new Vector2(vfxOffset, 1)));
             }
         }
-        SpritebatchParameters sbParams = Main.spriteBatch.Snapshot();
+        SpritebatchParameters parameters = Main.spriteBatch.Snapshot();
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         if (vertices.Count > 2)
         {
             Helper.DrawTexturedPrimitives(vertices.ToArray(), PrimitiveType.TriangleStrip, Assets.Extras.laser3_transparent.Value, false);
         }
-        Main.spriteBatch.ApplySaved(sbParams);
+        Main.spriteBatch.ApplySaved(parameters);
         return false;
     }
     public override void SetDefaults()

@@ -34,7 +34,7 @@ public class XSpirit : ModProjectile
         int i = 0;
         foreach (Vector2 pos in Projectile.oldPos)
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             float mult = (1f - fadeMult * i);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<GenericAdditiveDust>(), Main.rand.NextVector2Circular(3, 3), 0, Color.Indigo, Main.rand.NextFloat(0.02f, 0.075f) * mult);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 0, Color.Indigo, Main.rand.NextFloat(0.05f, 0.175f) * mult);
@@ -54,7 +54,7 @@ public class XSpirit : ModProjectile
         if (vfxOffset <= 0)
             vfxOffset = 1;
         vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
@@ -127,7 +127,7 @@ public class XSpiritNoHome : ModProjectile
         int i = 0;
         foreach (Vector2 pos in Projectile.oldPos)
         {
-            var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+            var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
             float mult = (1f - fadeMult * i);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<GenericAdditiveDust>(), Main.rand.NextVector2Circular(3, 3), 0, Color.Indigo, Main.rand.NextFloat(0.02f, 0.075f) * mult);
             Dust.NewDustPerfect(pos + Projectile.Size / 2, DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 0, Color.Indigo, Main.rand.NextFloat(0.05f, 0.175f) * mult);
@@ -148,7 +148,7 @@ public class XSpiritNoHome : ModProjectile
         if (vfxOffset >= 1)
             vfxOffset = 0;
         vfxOffset = MathHelper.Clamp(vfxOffset, float.Epsilon, 1 - float.Epsilon);
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {

@@ -21,7 +21,7 @@ public class TFlameThrower : ModProjectile //BREATH
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
         vfxOffset -= 0.015f;
@@ -99,7 +99,7 @@ public class TFlameThrower2 : ModProjectile //FALL
     {
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
@@ -175,7 +175,7 @@ public class TFlameThrower2_Inverted : ModProjectile //FALL
     {
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
@@ -254,7 +254,7 @@ public class TFlameThrowerHoming : ModProjectile //HOME
     {
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)
             vfxOffset = 1;
@@ -346,7 +346,7 @@ public class TFlameThrower3 : ModProjectile //NORMAL
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
         vfxOffset -= 0.015f;
@@ -423,7 +423,7 @@ public class TFlameThrower4 : ModProjectile //ACCELERATE
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
         vfxOffset -= 0.015f;
@@ -501,7 +501,7 @@ public class TFlameThrowerSine : ModProjectile
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         Main.spriteBatch.Reload(BlendState.Additive);
         vfxOffset -= 0.015f;
         if (vfxOffset <= 0)

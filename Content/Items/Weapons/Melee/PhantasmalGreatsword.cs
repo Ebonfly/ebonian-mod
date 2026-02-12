@@ -463,7 +463,7 @@ public class PhantasmalWave : ModProjectile
         if (lightColor != Color.Transparent) return false;
         Texture2D tex = Assets.Extras.Extras2.slash_06.Value;
         Main.spriteBatch.Reload(BlendState.Additive);
-        float fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        float fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         for (int i = 0; i < Projectile.oldPos.Length; i++)
         {
             float mult = MathF.Pow(1f - fadeMult * i, 2);

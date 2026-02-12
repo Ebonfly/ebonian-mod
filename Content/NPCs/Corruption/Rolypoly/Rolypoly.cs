@@ -123,7 +123,7 @@ public class Rolypoly : ModNPC
 
             Dust.NewDust(NPC.BottomLeft, NPC.width, 2, DustID.CorruptGibs, NPC.velocity.X, NPC.velocity.Y);
         }
-        NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, 2.5f * NPC.direction / (NPC.scale.Safe() + 0.3f), 0.05f);
+        NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, 2.5f * NPC.direction / (NPC.scale.SafeDivision() + 0.3f), 0.05f);
         if (NPC.collideX)
         {
             if (NPC.velocity.Y > -5)
@@ -136,7 +136,7 @@ public class Rolypoly : ModNPC
         }
         if (++NPC.ai[2] >= Main.rand.Next(300, 600) && player.Distance(NPC.Center) < 1800 && player.Distance(NPC.Center) > 200)
         {
-            Vector2 vel = Helper.FromAToB(NPC.Center, player.Center - new Vector2(0, 200 * NPC.scale)) * 5 / NPC.scale.Safe();
+            Vector2 vel = Helper.FromAToB(NPC.Center, player.Center - new Vector2(0, 200 * NPC.scale)) * 5 / NPC.scale.SafeDivision();
             NPC.velocity += new Vector2(vel.X * 0.7f, vel.Y * 2.2f);
             NPC.ai[2] = Main.rand.Next(-200, 20);
         }

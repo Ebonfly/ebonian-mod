@@ -1,9 +1,7 @@
 using System;
 using EbonianMod.Common.Globals;
 using EbonianMod.Common.Misc;
-using EbonianMod.Content.Projectiles.Conglomerate;
 using EbonianMod.Content.Projectiles.Enemy.BloodMoon;
-using EbonianMod.Content.Projectiles.VFXProjectiles;
 using Terraria.GameContent.Bestiary;
 
 namespace EbonianMod.Content.NPCs.BloodMoon;
@@ -45,32 +43,16 @@ public class Cryptid : CommonNPC
 
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 	{
-		Texture2D tex = TextureAssets.Npc[Type].Value;
-		Texture2D body = Assets.NPCs.BloodMoon.Cryptid_Body.Value;
-		Texture2D glow = Assets.NPCs.BloodMoon.Cryptid_Glow.Value;
-		
-		spriteBatch.Draw(tex, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 2) - screenPos, NPC.frame, NPC.HunterPotionColor(drawColor), NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-		spriteBatch.Draw(body, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 4) - screenPos, BodyFrame, NPC.HunterPotionColor(drawColor), NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-		spriteBatch.Draw(glow, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 4) - screenPos, BodyFrame, Color.White, NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+		spriteBatch.Draw(TextureAssets.Npc[Type].Value, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 2) - screenPos, NPC.frame, NPC.HunterPotionColor(drawColor), NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+		spriteBatch.Draw(Assets.NPCs.BloodMoon.Cryptid_Body.Value, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 4) - screenPos, BodyFrame, NPC.HunterPotionColor(drawColor), NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+		spriteBatch.Draw(Assets.NPCs.BloodMoon.Cryptid_Glow.Value, NPC.Center + _visualOffset + gfxOff + new Vector2(0, 4) - screenPos, BodyFrame, Color.White, NPC.rotation, NPC.Size * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-		if (BodyFrame.Y is 16*96 or 17*96 && (States)AIState == States.Land)
+		if (BodyFrame.Y is 16 * 96 or 17 * 96 && (States)AIState == States.Land)
 		{
-			Texture2D claw = Assets.NPCs.BloodMoon.Cryptid_Claw.Value;
 			Rectangle ClawFrame = BodyFrame with { Width = 108, Height = 118, Y = (BodyFrame.Y - BodyFrame.Height * 16) / 96 * 118 };
-
-			spriteBatch.Draw(claw, NPC.Center + _visualOffset + gfxOff + new Vector2(0, -4) - screenPos, ClawFrame, Color.White with {A = 0}, NPC.rotation, ClawFrame.Size() * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+			spriteBatch.Draw(Assets.NPCs.BloodMoon.Cryptid_Claw.Value, NPC.Center + _visualOffset + gfxOff + new Vector2(0, -4) - screenPos, ClawFrame, Color.White with {A = 0}, NPC.rotation, ClawFrame.Size() * 0.5f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 		}
 		return false;
-	}
-
-	public override void HitEffect(NPC.HitInfo hit)
-	{
-		if (NPC.life <= 0)
-		{
-			for (int i = 0; i < 5; i++)
-				Gore.NewGorePerfect(null, NPC.Center + Main.rand.NextVector2Circular(15, 35),
-					Main.rand.NextVector2Circular(5, 5), Mod.Find<ModGore>("EbonianMod/Cryptid" + i).Type);
-		}
 	}
 
 	enum States
@@ -86,7 +68,6 @@ public class Cryptid : CommonNPC
 	private Vector2 _visualOffset;
 	public override void AI()
 	{
-		NPC.noTileCollide = false;
 		Lighting.AddLight(NPC.Center, Color.Gold.ToVector3()*0.2f);
 		NPC.TargetClosest(false);
 		
@@ -148,20 +129,18 @@ public class Cryptid : CommonNPC
 			case States.Leap:
 			{
 				AITimer++;
-				NPC.velocity.Y++;
+				NPC.velocity.Y ++;
 
 				if (NPC.velocity.Y > 1)
 				{
-					NPC.velocity.Y++;
 					NPC.velocity.X *= 0.98f;
 				}
 
-				if (NPC.Center.Y < player.Center.Y - 32)
-					NPC.noTileCollide = true;
 
-				if (!NPC.noTileCollide && NPC.Grounded() && AITimer > 3 && NPC.velocity.Y > 0)
+				if (NPC.Grounded() && AITimer > 3 && NPC.velocity.Y > 4)
 				{
-					Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Bottom + new Vector2(NPC.direction * 18, 0), Vector2.Zero,
+					Projectile.NewProjectileDirect(NPC.GetSource_FromAI(),
+						NPC.Center, Vector2.Zero,
 						ProjectileType<CryptidLanding>(), 20, 0);
 					NPC.velocity.X *= 0;
 					AITimer = 0;
@@ -192,7 +171,7 @@ public class Cryptid : CommonNPC
 			case States.ChargeExplosion:
 			{
 				NPC.velocity.X *= 0f;
-				_visualOffset = MathHelper.SmoothStep(0, 3.5f,(AITimer / 35f).Saturate()) * Main.rand.NextVector2Unit();
+				_visualOffset = SmoothStep(0, 3.5f,(AITimer / 35f).Saturate()) * Main.rand.NextVector2Unit();
 				AITimer++;
 
 				float dustVelocityX = Main.rand.NextFloat(-8f, 8f);
@@ -219,7 +198,7 @@ public class Cryptid : CommonNPC
 			{
 				if ((int)AITimer == 10)
 					Projectile.NewProjectileDirect(NPC.GetSource_FromAI(),
-						NPC.Bottom + new Vector2(NPC.direction * 18, 0), Vector2.Zero,
+						Helper.Raycast(NPC.Center, Vector2.UnitY, 100).Point + new Vector2(NPC.direction * 18, 0), Vector2.Zero,
 						ProjectileType<CryptidLanding>(), 40, 0, ai2: 1);
 				if (++AITimer > 25)
 					SwitchState((int)States.Walk);

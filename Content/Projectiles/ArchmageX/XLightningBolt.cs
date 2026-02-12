@@ -80,11 +80,11 @@ public class XLightningBolt : ModProjectile
             {
                 if (i == n - 1)
                     x = 0;
-                float a = Main.rand.NextFloat(-x, x).Safe();
+                float a = Main.rand.NextFloat(-x, x).SafeDivision();
                 if (last < 0 && a > 0)
-                    a = Main.rand.NextFloat(0.1f, x).Safe();
+                    a = Main.rand.NextFloat(0.1f, x).SafeDivision();
                 else if (last > 0 && a < 0)
-                    a = Main.rand.NextFloat(-x, -0.1f).Safe();
+                    a = Main.rand.NextFloat(-x, -0.1f).SafeDivision();
                 if (i < 3)
                     a = 0;
                 Vector2 point = Vector2.SmoothStep(start, end, i / (float)n) + dir * a;

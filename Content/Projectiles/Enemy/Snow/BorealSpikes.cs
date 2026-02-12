@@ -18,7 +18,6 @@ public class BorealSpike : ModProjectile
     }
     public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => behindNPCsAndTiles.Add(index);
     public override bool ShouldUpdatePosition() => false;
-
     public override void AI()
     {
         Projectile.frame = (int)Projectile.ai[2];
@@ -36,17 +35,16 @@ public class BorealSpike : ModProjectile
         if (Projectile.timeLeft < 79 && Projectile.timeLeft > 76 && Projectile.ai[0] < Projectile.localAI[0] && Projectile.frame < 14)
         {
             Projectile.ai[0]++;
-            MPUtils.NewProjectile(Projectile.GetSource_FromAI(), Helper.GetNearestSurface(new Vector2(Projectile.Center.X + Projectile.ai[1] * 10, Projectile.Center.Y - 10)), Vector2.Zero, ProjectileType<BorealSpike>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai1: Projectile.ai[1], ai2: Projectile.frame + 2);
+            MPUtils.NewProjectile(Projectile.GetSource_FromAI(), Helper.GetNearestSurface(new Vector2(Projectile.Center.X + Projectile.ai[1] * 10, Projectile.Center.Y)) + new Vector2(0, 4), Vector2.Zero, ProjectileType<BorealSpike>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai1: Projectile.ai[1], ai2: Projectile.frame + 2);
         }
         Projectile.scale = Projectile.timeLeft < 20 ? Lerp(Projectile.scale, 0, 0.25f) : Lerp(Projectile.scale, 1, 0.3f);
     }
     public override bool PreDraw(ref Color lightColor)
     {
-        if (Projectile.timeLeft > 78)
-            return false;
+        if (Projectile.timeLeft > 78) return false;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Rectangle frameRect = new Rectangle(0, Projectile.frame / 2 * Projectile.height, Projectile.width, Projectile.height);
-        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, frameRect, lightColor, Projectile.rotation, new Vector2(Projectile.Size.X / 2, Projectile.Size.Y / 2 + 12), new Vector2(1, Projectile.scale), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, frameRect, lightColor, Projectile.rotation, new Vector2(Projectile.Size.X / 2, Projectile.Size.Y), new Vector2(1, Projectile.scale), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically);
         return false;
     }
 }

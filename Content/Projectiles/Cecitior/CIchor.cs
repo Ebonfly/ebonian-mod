@@ -17,7 +17,7 @@ public class CIchor : ModProjectile
     float vfxOffset;
     public override bool PreDraw(ref Color lightColor)
     {
-        var fadeMult = Helper.Safe(1f / Projectile.oldPos.Length);
+        var fadeMult = Helper.SafeDivision(1f / Projectile.oldPos.Length);
         Main.spriteBatch.Reload(BlendState.Additive);
         float alpha = 1f;
         vfxOffset -= 0.015f;
