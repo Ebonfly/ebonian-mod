@@ -104,13 +104,16 @@ public class ItemNameProjectile : ModProjectile
 				
 				Vector2 nextPlayerPosition = playerPositionOffset + Vector2.SmoothStep(Vector2.Lerp(Projectile.Center, lastOldPos,(i + 1f) / length), Vector2.Lerp(lastOldPos, player.MountedCenter,(i+1f) / length), (i+1f) / length);
 				Vector2 basePlayerPosition = playerPositionOffset + Vector2.SmoothStep(Vector2.Lerp(Projectile.Center, lastOldPos,i / length), Vector2.Lerp(lastOldPos, player.MountedCenter,i / length), i / length);
+				
+				if (basePlayerPosition.Distance(nextPlayerPosition) > 30f || basePlayerPosition.Distance(Projectile.Center - Main.screenPosition) > 150f)
+					continue;
 				float rotationPlayer = (basePlayerPosition - nextPlayerPosition).ToRotation();
 				float alpha = MathHelper.Clamp((Projectile.Center-Main.screenPosition).Distance(basePlayerPosition) / 20f, 0, 1) * MathF.Pow(mult, 2);
 				for (int j = -1; j < 2; j += 2)
 				{
 					Vector2 position = basePlayerPosition + new Vector2(8f, 0).RotatedBy(rotationPlayer + MathHelper.PiOver2 * j);
 					Color color = new Color(116, 131, 250, 40) * alpha;
-						verticesPlayer[k].Add(Helper.AsVertex(position, color, new Vector2(mult - Main.GlobalTimeWrappedHourly, j < 0 ? 0 : j)));
+					verticesPlayer[k].Add(Helper.AsVertex(position, color, new Vector2(mult - Main.GlobalTimeWrappedHourly, j < 0 ? 0 : j)));
 				}
 			}
 		
