@@ -46,7 +46,7 @@ public class XImpact : ModProjectile
             Texture2D tex = Main.rand.NextBool() ? tex1 : tex2;
             float angle = Helper.CircleDividedEqually(i, max * 2) + MathHelper.Pi;
             float scale = rand.NextFloat(0, .6f) * 2;
-            Vector2 offset = new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
+            Vector2 offset = new Vector2(rand.NextFloat(-40, 40), 0) + new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
             for (float j = 0; j < 2; j++)
                 Main.spriteBatch.Draw(tex, Projectile.Center + offset - Main.screenPosition, null, Color.Indigo * alpha, angle, new Vector2(0, tex.Height / 2), new Vector2(Projectile.ai[1], alpha) * scale * 0.6f * 4, SpriteEffects.None, 0);
         }
@@ -56,7 +56,7 @@ public class XImpact : ModProjectile
             Texture2D tex = Main.rand.NextBool() ? tex1 : tex2;
             float angle = Helper.CircleDividedEqually(i, max * 2) + MathHelper.Pi;
             float scale = rand.NextFloat(0, .8f) * 2;
-            Vector2 offset = new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
+            Vector2 offset = new Vector2(rand.NextFloat(-40, 40), 0) + new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
             for (float j = 0; j < 2; j++)
                 Main.spriteBatch.Draw(tex, Projectile.Center + offset - Main.screenPosition, null, Color.Indigo with { A = 0 } * alpha, angle, new Vector2(0, tex.Height / 2), new Vector2(Projectile.ai[1], alpha) * scale * 0.6f * 4, SpriteEffects.None, 0);
         }
@@ -65,7 +65,7 @@ public class XImpact : ModProjectile
     }
     public override void AI()
     {
-        Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], 1, 0.1f);
+        Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], 1, 0.12f);
         if (Projectile.ai[1] > 1)
             Projectile.Kill();
     }

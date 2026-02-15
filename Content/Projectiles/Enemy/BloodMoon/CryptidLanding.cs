@@ -46,12 +46,12 @@ public class CryptidLanding : ModProjectile
         float alpha = MathHelper.Lerp(0.5f, 0, Projectile.ai[1]) * 2;
         for (float i = 0; i < max; i++)
         {
-            int dir = Main.rand.NextBool() ? -1 : 1;
-            float angle = Main.rand.NextFloat(0, -0.7f) * dir + (dir == -1 ? MathHelper.Pi : 0);
+            int dir = rand.NextBool() ? -1 : 1;
+            float angle = rand.NextFloat(0, -0.7f) * dir + (dir == -1 ? MathHelper.Pi : 0) - dir * alpha;
             float scale = rand.NextFloat(0, .8f);
             if (Projectile.ai[2] > 0)
                 scale *= 2.5f;
-            Vector2 offset = new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
+            Vector2 offset = new Vector2(rand.NextFloat(-100, 100), 0) + new Vector2(Main.rand.NextFloat(-0, 2) * Projectile.ai[1] * scale, 0).RotatedBy(angle);
             for (float j = 0; j < 2; j++)
                 Main.spriteBatch.Draw(tex, Projectile.Center + offset - Main.screenPosition, null, Color.Gold with { A = 0 } * alpha, angle, new Vector2(0, tex.Height * 0.5f), new Vector2(Projectile.ai[1], alpha + Projectile.ai[1] * 0.05f) * scale * 0.6f * 4, SpriteEffects.None, 0);
         }
@@ -60,7 +60,7 @@ public class CryptidLanding : ModProjectile
     }
     public override void AI()
     {
-        Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], 1, 0.15f);
+        Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], 1, 0.25f);
         if (Projectile.ai[1] > 1)
             Projectile.Kill();
 
