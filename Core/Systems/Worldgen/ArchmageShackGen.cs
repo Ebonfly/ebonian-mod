@@ -100,7 +100,7 @@ public class ArchmageShackGen : ModSystem
     }
     public void GenHouse2(GenerationProgress progress, GameConfiguration _)
     {
-        Generator.GenerateStructure("Common/Systems/Worldgen/Structures/ArchmageArena", arenaPos, EbonianMod.Instance);
+        Generator.GenerateStructure("Core/Systems/Worldgen/Structures/ArchmageArena", arenaPos, EbonianMod.Instance);
         for (int i = arenaPos.X; i < arenaPos.X + 50; i++)
         {
             for (int j = arenaPos.Y; j < arenaPos.Y + 100; j++)
@@ -255,11 +255,11 @@ public class ArchmageShackGen : ModSystem
             }
         }
         Point16 pos = new(x, _y - 31);
-        Generator.GenerateStructure("Common/Systems/Worldgen/Structures/ArchmageShack", pos, EbonianMod.Instance);
+        Generator.GenerateStructure("Core/Systems/Worldgen/Structures/ArchmageShack", pos, EbonianMod.Instance);
         pos = new(x + 25, _y + 3);
-        Generator.GenerateStructure("Common/Systems/Worldgen/Structures/ArchmageStair", pos, EbonianMod.Instance);
+        Generator.GenerateStructure("Core/Systems/Worldgen/Structures/ArchmageStair", pos, EbonianMod.Instance);
         pos = new(x + 25, _y + 23);
-        Generator.GenerateStructure("Common/Systems/Worldgen/Structures/ArchmageStair", pos, EbonianMod.Instance);
+        Generator.GenerateStructure("Core/Systems/Worldgen/Structures/ArchmageStair", pos, EbonianMod.Instance);
         arenaPos = new(x - 38, _y + 43);
 
     }
