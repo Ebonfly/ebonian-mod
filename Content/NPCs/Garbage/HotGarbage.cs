@@ -18,7 +18,7 @@ public partial class HotGarbage : ModNPC
 
     public override void AI()
     {
-        AmbientVFX();
+        AmbientFX();
         
         if (AIState != State.Idle && AIState != State.SlamSlamSlam && AIState != State.PipeBombAirstrike)
             NPC.noTileCollide = false;
@@ -133,7 +133,7 @@ public partial class HotGarbage : ModNPC
         else if (AIState == State.SlamSlamSlam)
         {
             AnimationStyle = AnimationStyles.BoostWarning;
-            if (MathF.Abs(NPC.velocity.Y) > 1f && AITimer > 200)
+            if (MathF.Abs(NPC.velocity.Y) > 1f && (AITimer > 200 || AITimer < 50))
                 AnimationStyle = AnimationStyles.Boost;
             
             AITimer++;

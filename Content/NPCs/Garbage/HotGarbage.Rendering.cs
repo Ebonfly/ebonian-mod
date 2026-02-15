@@ -126,7 +126,7 @@ public partial class HotGarbage : ModNPC
                 case AnimationStyles.Close:
                     NPC.frame.X = 160;
                     if (NPC.frame.Y == frameHeight)
-                        SoundEngine.PlaySound(SoundID.Item37, NPC.Center);
+                        SoundEngine.PlaySound(SoundID.DrumFloorTom with { Pitch = 0.5f, PitchVariance = 0.1f }, NPC.Center);
                     if (NPC.frame.Y > 0)
                     {
                         NPC.frame.Y -= frameHeight;

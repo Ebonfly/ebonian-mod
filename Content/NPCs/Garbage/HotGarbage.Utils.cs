@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using EbonianMod.Content.Dusts;
 using ReLogic.Utilities;
 
 namespace EbonianMod.Content.NPCs.Garbage;
@@ -35,10 +37,39 @@ public partial class HotGarbage : ModNPC
     public bool StruckDead;
     public bool PerformedFullMoveset;
     public Vector2 DisposablePosition;
-    public SlotId LaserSoundSlot;
+    public SlotId LaserSoundSlot, LoopedBoilSound;
+    public Vector2 CachedVelocityForVFX;
     
-    void AmbientVFX() {
+    void AmbientFX() {
         AnimationStyle = AnimationStyles.Idle;
+
+        if (Main.GameUpdateCount % 4 == 2)
+            CachedVelocityForVFX = NPC.velocity;
+    
+        if (NPC.velocity.Length() > 1f)
+            Dust.NewDustDirect(NPC.Center + new Vector2(-NPC.width / (NPC.direction == -1 ? 2.5f : 8f), -8).RotatedBy(NPC.rotation), NPC.width / 2, 2, DustID.Poop, NPC.velocity.X, NPC.velocity.Y, Scale: 0.5f);
+
+        if (NPC.Grounded() && MathF.Abs(NPC.velocity.X) is > 0.75f and < 5f && MathF.Abs(NPC.velocity.X) < MathF.Abs(CachedVelocityForVFX.X) && NPC.rotation == 0f)
+        {
+            if (Main.GameUpdateCount % 4 == 0)
+                SoundEngine.PlaySound(SoundID.Item55 with { Volume = 0.3f }, NPC.Center);
+            
+            float[] wheelOffsets = [16, NPC.width / 2f + 6f, NPC.width - 10f];
+            Vector2 position = NPC.Bottom + new Vector2(-NPC.width / 2f + Main.rand.Next(wheelOffsets), -2) * NPC.direction + Main.rand.NextVector2Circular(2, 5);
+            Dust.NewDustPerfect(position, ModContent.DustType<LineDustFollowPoint>(), new Vector2(MathHelper.Clamp(-NPC.velocity.X * 0.5f, -3f, 3f), Main.rand.NextFloat(-1.5f, -0.5f)), newColor: Color.OrangeRed, Scale: 0.08f).noGravity = true;
+        }
+
+        if (!Main.dedServ && !SoundEngine.TryGetActiveSound(LoopedBoilSound, out var sound))
+        {
+            /*LoopedBoilSound = SoundEngine.PlaySound(??? with { Pitch = -1f, IsLooped = true, Type = SoundType.Sound }, NPC.Center,
+                (_) =>
+                {
+                    _.Position = NPC.Center;
+                    return NPC.active && NPC.type == Type && !Main.gameInactive;
+                });*/
+            
+            // Needs a good sound
+        }
         
         if (RedFrames.Contains(new(NPC.frame.X, NPC.frame.Y)))
             Lighting.AddLight(NPC.Center, TorchID.Red);
